@@ -1,0 +1,40 @@
+.layout {
+    min-height: 100vh;
+    text-align: center;
+    background: black url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png) repeat;
+    display: flex;
+    // justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+@media only screen and (max-width: 600px) {
+    .layout {
+        width: 100vw;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .layout {
+        width: 100vw;
+    }
+}
+
+@media only screen and (min-width: 960px) {
+    .layout {
+        width: 100vw;
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+    .layout {
+        width: 960px;
+    }
+}
+
+@media only screen and (min-width: 1920px) {
+    .layout {
+        width: 1280px;
+    }
+}

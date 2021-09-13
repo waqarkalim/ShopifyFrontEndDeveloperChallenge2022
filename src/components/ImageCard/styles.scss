@@ -1,0 +1,64 @@
+$black: rgb(0, 0, 0);
+$grey: rgba(0, 0, 0, 0.6);
+
+.image-card {
+	width: 45%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	border-radius: 2rem;
+	background-color: white;
+	margin: 0.5rem;
+	padding: 1rem;
+	box-shadow: 0 0 0.2rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .image-card {
+		width: 100%;
+    }
+}
+
+.image-title, .image-date, .image-description {
+	font-family: Helvetica;
+	margin: 0.5rem;
+}
+
+.image-title {
+	font-size: 1rem;
+	color: $black;
+}
+
+.image-date {
+	font-size: 0.75rem;
+	color: $grey;
+}
+
+.image-description {
+	font-size: 0.875rem;
+	text-align: center;
+	font-weight: 400;
+	line-height: 1.5;
+}
+
+.image-media {
+	width: 100%;
+	aspect-ratio: 16/9;
+}
+
+.btn-section {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+	padding: 0.5rem;
+}
+
+.expand-btn {
+	border-radius: 100%;
+	border: 1px solid transparent;
+	box-shadow: 0 0 0 transparent;
+}
+

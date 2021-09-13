@@ -1,5 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .App {
+  min-height: 100vh;
   text-align: center;
+  background: black url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png) repeat;
 }
 
 .App-logo {
@@ -35,4 +42,23 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.header-title, .subheader-title {
+  font-family: Helvetica;
+  font-weight: 400;
+}
+
+.header-title {
+  color: white;
+  padding-top: 1.5rem;
+  padding-bottom: 0;
+  font-size: 2rem;
+}
+
+.subheader-title {
+  color: rgba(255, 255, 255, 0.6);
+  padding-top: 0;
+  padding-bottom: 1.5rem;
+  font-size: 1.25rem;
 }
