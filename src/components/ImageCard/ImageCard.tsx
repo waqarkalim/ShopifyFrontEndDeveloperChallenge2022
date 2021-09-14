@@ -1,45 +1,39 @@
-import React, { Fragment, ReactElement, useEffect, useState } from 'react'
-import { ReactComponent as Heart } from './outlined-heart.svg';
+import React, { ReactElement, useEffect, useState } from 'react'
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import "./styles.scss"
 
+import store from "./../../storage";
+
 interface Props {
-    index: number;
+    key: number;
     image: any;
 }
 
-const ImageCard = ({ index, image }: Props): ReactElement => {
+const ImageCard = ({ key, image }: Props): ReactElement => {
     const [isExpanded, setExpanded] = useState<boolean>(false);
-    const [isLiked, setLiked] = useState<boolean>(false);
-    const [imageUrl, setImageUrl] = useState<string>('');
+    const [isLiked, setLiked] = useState<boolean>(store.get(image.imageUrl) || false);
 
-    const { date, title, url, explanation, thumbnail_url, media_type } = image;
-
+    const { date, title, imageUrl, explanation } = image;
+   
     useEffect(() => {
-        setImageUrl(media_type === "video" ? thumbnail_url : url);
-    }, [])
+        store.set(imageUrl, isLiked);
+    }, [isLiked])
 
-    useEffect(() => {
-        const likedInfoFromLocalStorage: string | null = localStorage.getItem(imageUrl);
-
-        if (likedInfoFromLocalStorage) {
-            setLiked(JSON.parse(likedInfoFromLocalStorage));
-        }
-    }, [imageUrl])
-
-    const handleLikeButtonClick = () => {
-        localStorage.setItem(imageUrl, JSON.stringify(!isLiked));
+    const toggleLiked = (): void => {
         setLiked(!isLiked);
     }
 
+    const toggleExpanded = (): void => {
+        setExpanded(!isExpanded);
+    }
+
     return (
-        <div key={index} className="image-card">
+        <div key={key} className="image-card">
             <div>
                 <p className="image-title">{title}</p>
                 <p className="image-date">{date}</p>
@@ -47,21 +41,17 @@ const ImageCard = ({ index, image }: Props): ReactElement => {
             <img alt={title} src={imageUrl} className="image-media" />
             <div className="btn-section">
                 <div>
-                    {
-                        isLiked ? (
-                            <FavoriteIcon onClick={handleLikeButtonClick} />
-                        ) : (
-                            <FavoriteBorderIcon onClick={handleLikeButtonClick} />
-                        )
-                    }
+                    <button className="like-btn" onClick={toggleLiked}>
+                        {isLiked ? <FavoriteIcon className="liked-btn"/> : <FavoriteBorderIcon />}
+                    </button>
                 </div>
                 <div>
-                    <button className="expand-btn" onClick={() => { setExpanded(!isExpanded) }}>
-                        {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                    <button className="expand-btn" onClick={toggleExpanded}>
+                        <ExpandMoreIcon className={`expand ${isExpanded ? "expand-open" : ""}`} />
                     </button>
                 </div>
             </div>
-            {isExpanded && (<div className="image-description">{explanation}</div>)}
+            {isExpanded && <div className="image-description">{explanation}</div>}
         </div>
     )
 

@@ -11,11 +11,27 @@ interface Props {
     setClicker: (clicker: number) => void;
 }
 
-const SelectionBar = ({ startDate, clicker, setStartDate, setClicker }: Props): ReactElement => (
-    <div className="selection-bar">
-        <DatePicker id="start-date" label="Start Date" date={startDate} onChange={setStartDate} />
-        <button className="btn" onClick={() => { setClicker(clicker + 1); }}>Pull Images</button>
-    </div>
-)
+const SelectionBar = ({ startDate, clicker, setStartDate, setClicker }: Props): ReactElement => {
+    const handlePullImagesButtonClick = (): void => {
+        setClicker(clicker + 1);
+    }
+
+    return (
+        <div className="selection-bar">
+            <DatePicker
+                id="start-date"
+                label="Start Date"
+                date={startDate}
+                onChange={setStartDate}
+            />
+            <button
+                className="btn"
+                onClick={handlePullImagesButtonClick}
+            >
+                Pull Images
+            </button>
+        </div >
+    )
+}
 
 export default SelectionBar;

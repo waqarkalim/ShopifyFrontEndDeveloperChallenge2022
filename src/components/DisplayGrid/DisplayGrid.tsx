@@ -17,7 +17,7 @@ const DisplayGrid = ({ isLoading, images }: Props): ReactElement => {
             ) : (
                 <div className="grid">
                     {images.map((image: any, index: number) => (
-                        <ImageCard index={index} image={image} />
+                        <ImageCard key={index} image={image} />
                     ))}
                 </div>
             )}

@@ -23,7 +23,7 @@ interface Props {
  * @param {string} label
  * @param {moment} date
  * @param {function} handleDateChange
- * @returns JSX.Element
+ * @returns ReactElement
  */
 const DatePicker = ({ id, label, date, onChange }: Props): ReactElement => {
     const handleFormattedDateChange = (date: MaterialUiPickersDate): void => {
@@ -45,7 +45,6 @@ const DatePicker = ({ id, label, date, onChange }: Props): ReactElement => {
                     format="YYYY-MM-DD"
                     margin="normal"
                     autoOk={true}
-                    showTodayButton={true}
                     inputValue={date}
                     value={date}
                     onChange={handleFormattedDateChange}
