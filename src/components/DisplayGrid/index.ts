@@ -1,3 +1,3 @@
-import DisplayGrid from "./DisplayGrid"
+import DisplayGrid from './DisplayGrid';
 
 export default DisplayGrid;

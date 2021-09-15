@@ -1,37 +1,43 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react';
 
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
-import FavoriteIcon from '@material-ui/icons/Favorite'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
-import './styles.scss'
+import './styles.scss';
 
-import store from './../../storage'
+import store from './../../storage';
 
 type Props = {
-	image: any
-}
+	image: any;
+};
 
+/**
+ * @description The ImageCard component is a component for displaying the information about each image
+ *
+ * @param {object} image
+ * @returns ReactElement
+ */
 const ImageCard = ({ image }: Props): ReactElement => {
-	const [isExpanded, setExpanded] = useState<boolean>(false)
+	const [isExpanded, setExpanded] = useState<boolean>(false);
 	const [isLiked, setLiked] = useState<boolean>(
 		store.get(image.imageUrl) || false
-	)
+	);
 
-	const { date, title, imageUrl, explanation } = image
+	const { date, title, imageUrl, explanation } = image;
 
 	useEffect(() => {
-		store.set(imageUrl, isLiked)
-	}, [isLiked])
+		store.set(imageUrl, isLiked);
+	}, [isLiked]);
 
 	const toggleLiked = (): void => {
-		setLiked(!isLiked)
-	}
+		setLiked(!isLiked);
+	};
 
 	const toggleExpanded = (): void => {
-		setExpanded(!isExpanded)
-	}
+		setExpanded(!isExpanded);
+	};
 
 	return (
 		<div id="image-card" className="image-card">
@@ -67,7 +73,7 @@ const ImageCard = ({ image }: Props): ReactElement => {
 						className="like-btn"
 						onClick={toggleLiked}
 						aria-pressed={isLiked}
-                        aria-label="Like Button"
+						aria-label="Like Button"
 					>
 						{isLiked ? (
 							<FavoriteIcon className="liked-btn" />
@@ -83,7 +89,7 @@ const ImageCard = ({ image }: Props): ReactElement => {
 						className="expand-btn"
 						onClick={toggleExpanded}
 						aria-expanded={isExpanded}
-                        aria-label="Expand Button"
+						aria-label="Expand Button"
 					>
 						<ExpandMoreIcon
 							className={`expand ${
@@ -104,7 +110,7 @@ const ImageCard = ({ image }: Props): ReactElement => {
 				</div>
 			)}
 		</div>
-	)
-}
+	);
+};
 
-export default ImageCard
+export default ImageCard;

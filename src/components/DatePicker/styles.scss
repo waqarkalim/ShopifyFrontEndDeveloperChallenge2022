@@ -1,0 +1,18 @@
+.date-picker {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+
+	.date-picker-label {
+		font-size: 0.75rem;
+		font-family: 'Helvetica';
+		font-weight: 400;
+		color: rgba(0, 0, 0, 0.54);
+	}
+
+	.date-picker-input {
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+	}
+}

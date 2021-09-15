@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
-import moment from 'moment'
+import React, { useState } from 'react';
+import moment from 'moment';
 
-import logo from './logo.svg'
-import './App.css'
+import logo from './logo.svg';
+import './App.css';
 
-import SelectionBar from './components/SelectionBar'
-import Layout from './components/Layout'
-import ImageContainer from './components/ImageContainer'
+import SelectionBar from './components/SelectionBar';
+import Layout from './components/Layout';
+import ImageContainer from './components/ImageContainer';
 
 function App() {
 	const [startDate, setStartDate] = useState<string>(
 		moment().format('YYYY-MM-DD')
-	)
-	const [clicker, setClicker] = useState<number>(0)
+	);
+	const [clicker, setClicker] = useState<number>(0);
 
 	return (
 		<div className="App">
@@ -41,7 +41,7 @@ function App() {
 				</main>
 			</Layout>
 		</div>
-	)
+	);
 }
 
-export default App
+export default App;

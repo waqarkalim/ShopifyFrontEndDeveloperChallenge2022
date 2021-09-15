@@ -1,16 +1,25 @@
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react';
 
-import DatePicker from './../DatePicker'
+import DatePicker from './../DatePicker';
 
-import './styles.scss'
+import './styles.scss';
 
 type Props = {
-	startDate: string
-	clicker: number
-	setStartDate: (startDate: string) => void
-	setClicker: (clicker: number) => void
-}
+	startDate: string;
+	clicker: number;
+	setStartDate: (startDate: string) => void;
+	setClicker: (clicker: number) => void;
+};
 
+/**
+ * @description The SelectionBar is a component that allows the user to select their input for the API as well as allows them to fetch the images
+ *
+ * @param {string} startDate
+ * @param {number} clicker
+ * @param {function} setStartDate
+ * @param {function} setClicker
+ * @returns ReactElement
+ */
 const SelectionBar = ({
 	startDate,
 	clicker,
@@ -18,8 +27,8 @@ const SelectionBar = ({
 	setClicker,
 }: Props): ReactElement => {
 	const handlePullImagesButtonClick = (): void => {
-		setClicker(clicker + 1)
-	}
+		setClicker(clicker + 1);
+	};
 
 	return (
 		<div id="selection-bar" className="selection-bar">
@@ -41,7 +50,7 @@ const SelectionBar = ({
 				Click Here To Pull Images
 			</button>
 		</div>
-	)
-}
+	);
+};
 
-export default SelectionBar
+export default SelectionBar;

@@ -1,17 +1,19 @@
-import React, { Fragment, ReactElement } from 'react';
+import { ReactElement } from 'react';
 
-import "./styles.scss";
+import './styles.scss';
 
 type Props = {
-    children: ReactElement[];
-}
+	children: ReactElement[];
+};
 
+/**
+ * @description The Layout component is a component that contains all of the elements of the website
+ *
+ * @param {ReactElement[]} children
+ * @returns ReactElement
+ */
 const Layout = ({ children }: Props): ReactElement => {
-    return (
-        <div className="layout">
-            {children}
-        </div>
-    )
-}
+	return <div className="layout">{children}</div>;
+};
 
 export default Layout;
