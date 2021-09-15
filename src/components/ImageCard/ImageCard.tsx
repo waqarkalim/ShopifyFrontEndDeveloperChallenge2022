@@ -10,11 +10,10 @@ import './styles.scss'
 import store from './../../storage'
 
 type Props = {
-	key: number
 	image: any
 }
 
-const ImageCard = ({ key, image }: Props): ReactElement => {
+const ImageCard = ({ image }: Props): ReactElement => {
 	const [isExpanded, setExpanded] = useState<boolean>(false)
 	const [isLiked, setLiked] = useState<boolean>(
 		store.get(image.imageUrl) || false
@@ -35,7 +34,7 @@ const ImageCard = ({ key, image }: Props): ReactElement => {
 	}
 
 	return (
-		<div key={key} id="image-card" className="image-card">
+		<div id="image-card" className="image-card">
 			<div id="image-header">
 				<p
 					id="image-title"
