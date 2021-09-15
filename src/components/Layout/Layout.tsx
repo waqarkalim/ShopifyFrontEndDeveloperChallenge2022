@@ -2,7 +2,7 @@ import React, { Fragment, ReactElement } from 'react';
 
 import "./styles.scss";
 
-interface Props {
+type Props = {
     children: ReactElement[];
 }
 

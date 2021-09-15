@@ -1,60 +1,111 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import FavoriteIcon from '@material-ui/icons/Favorite'
 
-import "./styles.scss"
+import './styles.scss'
 
-import store from "./../../storage";
+import store from './../../storage'
 
-interface Props {
-    key: number;
-    image: any;
+type Props = {
+	key: number
+	image: any
 }
 
 const ImageCard = ({ key, image }: Props): ReactElement => {
-    const [isExpanded, setExpanded] = useState<boolean>(false);
-    const [isLiked, setLiked] = useState<boolean>(store.get(image.imageUrl) || false);
+	const [isExpanded, setExpanded] = useState<boolean>(false)
+	const [isLiked, setLiked] = useState<boolean>(
+		store.get(image.imageUrl) || false
+	)
 
-    const { date, title, imageUrl, explanation } = image;
-   
-    useEffect(() => {
-        store.set(imageUrl, isLiked);
-    }, [isLiked])
+	const { date, title, imageUrl, explanation } = image
 
-    const toggleLiked = (): void => {
-        setLiked(!isLiked);
-    }
+	useEffect(() => {
+		store.set(imageUrl, isLiked)
+	}, [isLiked])
 
-    const toggleExpanded = (): void => {
-        setExpanded(!isExpanded);
-    }
+	const toggleLiked = (): void => {
+		setLiked(!isLiked)
+	}
 
-    return (
-        <div key={key} className="image-card">
-            <div>
-                <p className="image-title">{title}</p>
-                <p className="image-date">{date}</p>
-            </div>
-            <img alt={title} src={imageUrl} className="image-media" />
-            <div className="btn-section">
-                <div>
-                    <button className="like-btn" onClick={toggleLiked}>
-                        {isLiked ? <FavoriteIcon className="liked-btn"/> : <FavoriteBorderIcon />}
-                    </button>
-                </div>
-                <div>
-                    <button className="expand-btn" onClick={toggleExpanded}>
-                        <ExpandMoreIcon className={`expand ${isExpanded ? "expand-open" : ""}`} />
-                    </button>
-                </div>
-            </div>
-            {isExpanded && <div className="image-description">{explanation}</div>}
-        </div>
-    )
+	const toggleExpanded = (): void => {
+		setExpanded(!isExpanded)
+	}
 
+	return (
+		<div key={key} id="image-card" className="image-card">
+			<div id="image-header">
+				<p
+					id="image-title"
+					className="image-title"
+					aria-label={title}
+					aria-labelledby="image-header"
+				>
+					{title}
+				</p>
+				<p
+					id="image-date"
+					className="image-date"
+					aria-label={date}
+					aria-labelledby="image-header"
+				>
+					{date}
+				</p>
+			</div>
+			<img
+				id="image-media"
+				alt={title}
+				src={imageUrl}
+				className="image-media"
+			/>
+			<div className="btn-section">
+				<div>
+					<button
+						type="button"
+						id="like-button"
+						className="like-btn"
+						onClick={toggleLiked}
+						aria-pressed={isLiked}
+                        aria-label="Like Button"
+					>
+						{isLiked ? (
+							<FavoriteIcon className="liked-btn" />
+						) : (
+							<FavoriteBorderIcon />
+						)}
+					</button>
+				</div>
+				<div>
+					<button
+						type="button"
+						id="expand-button"
+						className="expand-btn"
+						onClick={toggleExpanded}
+						aria-expanded={isExpanded}
+                        aria-label="Expand Button"
+					>
+						<ExpandMoreIcon
+							className={`expand ${
+								isExpanded ? 'expand-open' : ''
+							}`}
+						/>
+					</button>
+				</div>
+			</div>
+			{isExpanded && (
+				<div
+					id="image-description"
+					className="image-description"
+					aria-label={explanation}
+					aria-labelledby="expand-button"
+				>
+					{explanation}
+				</div>
+			)}
+		</div>
+	)
 }
 
 export default ImageCard

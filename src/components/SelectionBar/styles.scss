@@ -1,3 +1,5 @@
+$material-blue: #3f51b5;
+
 .selection-bar {
 	width: inherit;
 	display: flex;
@@ -12,20 +14,35 @@
 }
 
 @media only screen and (max-width: 600px) {
-    .selection-bar {
+	.selection-bar {
 		flex-direction: column;
-    }
+	}
 }
 
 .btn {
+	font-size: 1rem;
 	font-family: Helvetica;
-	background-color: #3f51b5;
+	background-color: $material-blue;
 	color: white;
-	padding: 0.5rem 1.5rem;
+	padding: 1rem 1.5rem;
 	border-radius: 0.5rem;
 	cursor: pointer;
 	box-shadow: 0 0 0 transparent;
 	border: 0 solid transparent;
 	text-transform: 0 0 0 transparent;
+}
 
+.ripple {
+	background-position: center;
+	transition: background-color 0.8s;
+}
+
+.ripple:hover {
+	background: #005092 radial-gradient(circle, transparent 1%, #005092 1%)
+		center/15000%;
+}
+.ripple:active {
+	background-color: #6eb9f7;
+	background-size: 100%;
+	transition: background_color 0s;
 }

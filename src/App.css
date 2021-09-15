@@ -5,12 +5,13 @@
 
 html {
   overflow-y: scroll;
+  overflow-x: none;
+  background: black url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png) repeat;
 }
 
 .App {
   min-height: 100vh;
   text-align: center;
-  background: black url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png) repeat;
 }
 
 .App-logo {

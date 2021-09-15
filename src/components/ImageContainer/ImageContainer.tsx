@@ -9,7 +9,7 @@ import { API_URL, API_KEY } from "./../../constants";
 
 import "./styles.scss";
 
-interface Props {
+type Props = {
     startDate: string;
     clicker: number
 }

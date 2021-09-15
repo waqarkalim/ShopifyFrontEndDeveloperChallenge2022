@@ -4,7 +4,7 @@ import ImageCard from "./../ImageCard";
 
 import "./styles.scss";
 
-interface Props {
+type Props = {
     isLoading: boolean;
     images: any[]
 }
