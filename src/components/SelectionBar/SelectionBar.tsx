@@ -32,20 +32,21 @@ const SelectionBar = ({
 
 	return (
 		<div id="selection-bar" className="selection-bar">
+			{/* The date input component to select the starting date for the API  */}
 			<DatePicker
 				id="start-date"
 				label="Select Start Date"
 				date={startDate}
 				onChange={setStartDate}
 				aria-label="Select Start Date"
-				aria-labelledby="selection-bar"
 			/>
+
+			{/* The button that is clicked to pull the data from the API  */}
 			<button
 				type="button"
 				className="btn ripple"
 				onClick={handlePullImagesButtonClick}
 				aria-label="Click Here To Pull Images"
-				aria-labelledby="selection-bar"
 			>
 				Click Here To Pull Images
 			</button>

@@ -12,18 +12,18 @@ function App() {
 	const [startDate, setStartDate] = useState<string>(
 		moment().format('YYYY-MM-DD')
 	);
-	const [clicker, setClicker] = useState<number>(0);
+	const [clicker, setClicker] = useState<number>(0); // The clicker state acts as a counter to detect when the user clicks
 
 	return (
 		<div className="App">
 			<Layout>
-				<header>
+				<header role="banner">
 					<h1 className="header-title">Spacestagram</h1>
 					<h2 className="subheader-title">
 						Image-sharing from the final frontier
 					</h2>
 				</header>
-				<main>
+				<main role="main">
 					<section>
 						<SelectionBar
 							startDate={startDate}

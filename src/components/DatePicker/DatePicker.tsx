@@ -24,26 +24,31 @@ type Props = {
  * @param {function} onChange
  * @returns ReactElement
  */
-const DatePicker = ({ id, label, date, onChange }: Props): ReactElement => (
-	<MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
-		<KeyboardDatePicker
-			id={id}
-			label={label}
-			disableToolbar
-			allowKeyboardControl={false}
-			variant="inline"
-			format="YYYY-MM-DD"
-			margin="normal"
-			autoOk={true}
-			inputValue={date}
-			value={date}
-			onChange={(date, value) => onChange(value as string)}
-			maxDate={new Date()}
-			KeyboardButtonProps={{
-				'aria-label': 'change date',
-			}}
-		/>
-	</MuiPickersUtilsProvider>
-);
+const DatePicker = ({ id, label, date, onChange }: Props): ReactElement => {
+	const handleDateChange = (value: string) => {
+		onChange(value);
+	};
+
+	return (
+		<MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
+			<KeyboardDatePicker
+				id={id}
+				label={label}
+				disableToolbar // Disable toolbar on date picker
+				variant="inline"
+				format="YYYY-MM-DD"
+				margin="normal"
+				autoOk={true}
+				inputValue={date}
+				value={date}
+				onChange={(date, value) => handleDateChange(value as string)}
+				maxDate={new Date()} // Set today's date as the max start date
+				KeyboardButtonProps={{
+					'aria-label': 'change date',
+				}}
+			/>
+		</MuiPickersUtilsProvider>
+	);
+};
 
 export default DatePicker;

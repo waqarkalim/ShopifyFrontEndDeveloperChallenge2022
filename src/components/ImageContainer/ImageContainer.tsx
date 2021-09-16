@@ -51,8 +51,11 @@ const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
 
 	// Retrieving the appropriate image url for each image object (for the case where the media type is video and so the url property points to a video and not an image)
 	const processImages = (images: any[]): any[] => {
-		return images.map((image: any): any => {
+		return images.map((image: any, index: number): any => {
 			const { media_type, thumbnail_url, url } = image;
+
+			// As the API does not return any unique id for each image and the code is only using the id for accessiblity purposes, we are considering the array index as our unique id
+			const id: number = index;
 
 			// If media_type is video and then assign the video thumbnail as the display image
 			const imageUrl =
@@ -60,7 +63,7 @@ const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
 					? thumbnail_url
 					: url;
 
-			return { ...image, ...{ imageUrl: imageUrl } };
+			return { ...image, ...{ id: id, imageUrl: imageUrl } };
 		});
 	};
 

@@ -25,7 +25,7 @@ const ImageCard = ({ image }: Props): ReactElement => {
 		store.get(image.imageUrl) || false
 	);
 
-	const { date, title, imageUrl, explanation } = image;
+	const { id, date, title, imageUrl, explanation } = image;
 
 	useEffect(() => {
 		store.set(imageUrl, isLiked);
@@ -40,36 +40,34 @@ const ImageCard = ({ image }: Props): ReactElement => {
 	};
 
 	return (
-		<div id="image-card" className="image-card">
-			<div id="image-header">
-				<p
-					id="image-title"
+		<div id={`image-card-${id}`} className="image-card">
+			<div id={`image-header-${id}`}>
+				<div
+					id={`image-title-${id}`}
 					className="image-title"
 					aria-label={title}
-					aria-labelledby="image-header"
 				>
-					{title}
-				</p>
-				<p
-					id="image-date"
+					<p>{title}</p>
+				</div>
+				<div
+					id={`image-date-${id}`}
 					className="image-date"
 					aria-label={date}
-					aria-labelledby="image-header"
 				>
-					{date}
-				</p>
+					<p>{date}</p>
+				</div>
 			</div>
 			<img
-				id="image-media"
+				id={`image-media-${id}`}
+				className="image-media"
 				alt={title}
 				src={imageUrl}
-				className="image-media"
 			/>
 			<div className="btn-section">
 				<div>
 					<button
 						type="button"
-						id="like-button"
+						id={`like-button-${id}`}
 						className="like-btn"
 						onClick={toggleLiked}
 						aria-pressed={isLiked}
@@ -85,11 +83,12 @@ const ImageCard = ({ image }: Props): ReactElement => {
 				<div>
 					<button
 						type="button"
-						id="expand-button"
+						id={`expand-button-${id}`}
 						className="expand-btn"
 						onClick={toggleExpanded}
 						aria-expanded={isExpanded}
 						aria-label="Expand Button"
+						aria-controls="image-description"
 					>
 						<ExpandMoreIcon
 							className={`expand ${
@@ -99,16 +98,17 @@ const ImageCard = ({ image }: Props): ReactElement => {
 					</button>
 				</div>
 			</div>
-			{isExpanded && (
-				<div
-					id="image-description"
-					className="image-description"
-					aria-label={explanation}
-					aria-labelledby="expand-button"
-				>
-					{explanation}
-				</div>
-			)}
+			<div
+				role="region"
+				id={`image-description-${id}`}
+				className="image-description"
+				hidden={!isExpanded}
+				aria-label={explanation}
+				aria-labelledby={`expand-button-${id}`}
+				aria-hidden={!isExpanded}
+			>
+				<p>{explanation}</p>
+			</div>
 		</div>
 	);
 };
