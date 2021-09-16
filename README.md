@@ -12,6 +12,7 @@ As part of Shopify's hiring process for internship positions, candidates are req
 - User can browse photos starting from a specific date
 - Follows accessibility guidelines ([MDN reference](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML))
 - Responsive Design
+- Secret Easter Egg 😄
 
 
   
