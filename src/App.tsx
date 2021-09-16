@@ -9,7 +9,7 @@ import ImageContainer from './components/ImageContainer';
 
 import store from './storage';
 
-import { SHOPIFY_IS_AWESOME } from './constants';
+import { SHOPIFY_IS_AWESOME, PERSONAL_WEBSITE_URL } from './constants';
 
 function App() {
 	const [startDate, setStartDate] = useState<string>(
@@ -28,7 +28,15 @@ function App() {
 				<header role="banner">
 					<h1 className="header-title">Spacestagram</h1>
 					<h2 className="subheader-title">
-						Image-sharing from the final frontier
+						Image-sharing from{' '}
+						<span
+							className="easter-egg"
+							onClick={() => {
+								window.open(PERSONAL_WEBSITE_URL);
+							}}
+						>
+							the final frontier
+						</span>
 					</h2>
 				</header>
 				<main role="main">

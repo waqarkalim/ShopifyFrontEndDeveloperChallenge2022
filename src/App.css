@@ -72,3 +72,12 @@ html {
 	padding-bottom: 1.5rem;
 	font-size: 1.25rem;
 }
+
+.easter-egg {
+	cursor: pointer;
+}
+
+.easter-egg:hover {
+	background-color: blue;
+	text-decoration: underline;
+}

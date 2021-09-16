@@ -27,6 +27,7 @@ const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
 
 	const endDate: string = moment().format('YYYY-MM-DD');
 
+	// Initiating fetching whenever the pull images button is pressed
 	useEffect(() => {
 		fetchImages();
 	}, [clicker]);

@@ -23,6 +23,8 @@ type Props = {
  */
 const ImageCard = ({ image }: Props): ReactElement => {
 	const [isExpanded, setExpanded] = useState<boolean>(false);
+
+	// Checking to see if the image's like status already exists in local storage, if not, assigns it to false
 	const [isLiked, setLiked] = useState<boolean>(
 		store.get(SHOPIFY_IS_AWESOME)[image.imageUrl] || false
 	);
@@ -47,6 +49,7 @@ const ImageCard = ({ image }: Props): ReactElement => {
 
 	return (
 		<div id={`image-card-${id}`} className="image-card">
+			{/* Displaying the header titles of each image card */}
 			<div id={`image-header-${id}`}>
 				<div
 					id={`image-title-${id}`}
@@ -63,12 +66,16 @@ const ImageCard = ({ image }: Props): ReactElement => {
 					<p>{date}</p>
 				</div>
 			</div>
+
+			{/* Displaying the actual image of each image card */}
 			<img
 				id={`image-media-${id}`}
 				className="image-media"
 				alt={title}
 				src={imageUrl}
 			/>
+
+			{/* Displaying the like button and the expand description button for each image card */}
 			<div className="btn-section">
 				<div>
 					<button
@@ -104,6 +111,8 @@ const ImageCard = ({ image }: Props): ReactElement => {
 					</button>
 				</div>
 			</div>
+
+			{/* The hidden image description section that can only be shown when the `expand-button-${id}` button is clicked */}
 			<div
 				role="region"
 				id={`image-description-${id}`}

@@ -46,3 +46,17 @@ $material-blue: #3f51b5;
 	background-size: 100%;
 	transition: background_color 0s;
 }
+
+.easter-egg-text {
+	color: transparent;
+	padding: 1rem;
+	background-color: white;
+	border-radius: 10rem;
+	// border: 1px solid black;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+	:hover {
+		color: black;
+		text-decoration: underline;
+	}
+}

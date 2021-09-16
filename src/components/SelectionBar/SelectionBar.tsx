@@ -41,6 +41,10 @@ const SelectionBar = ({
 				aria-label="Select Start Date"
 			/>
 
+			<div className="easter-egg-text">
+				<p>There might be an easter egg in the headers</p>
+			</div>
+
 			{/* The button that is clicked to pull the data from the API  */}
 			<button
 				type="button"
