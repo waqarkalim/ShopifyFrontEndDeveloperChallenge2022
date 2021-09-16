@@ -9,6 +9,8 @@ import './styles.scss';
 
 import store from './../../storage';
 
+import { SHOPIFY_IS_AWESOME } from './../../constants';
+
 type Props = {
 	image: any;
 };
@@ -22,13 +24,17 @@ type Props = {
 const ImageCard = ({ image }: Props): ReactElement => {
 	const [isExpanded, setExpanded] = useState<boolean>(false);
 	const [isLiked, setLiked] = useState<boolean>(
-		store.get(image.imageUrl) || false
+		store.get(SHOPIFY_IS_AWESOME)[image.imageUrl] || false
 	);
 
 	const { id, date, title, imageUrl, explanation } = image;
 
 	useEffect(() => {
-		store.set(imageUrl, isLiked);
+		// Changing the like status of the image in local storage
+		store.set(SHOPIFY_IS_AWESOME, {
+			...store.get(SHOPIFY_IS_AWESOME),
+			...{ [imageUrl]: isLiked },
+		});
 	}, [isLiked]);
 
 	const toggleLiked = (): void => {

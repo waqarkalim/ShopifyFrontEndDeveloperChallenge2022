@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import moment from 'moment';
 
-import logo from './logo.svg';
 import './App.css';
 
 import SelectionBar from './components/SelectionBar';
 import Layout from './components/Layout';
 import ImageContainer from './components/ImageContainer';
 
+import store from './storage';
+
+import { SHOPIFY_IS_AWESOME } from './constants';
+
 function App() {
 	const [startDate, setStartDate] = useState<string>(
 		moment().format('YYYY-MM-DD')
 	);
 	const [clicker, setClicker] = useState<number>(0); // The clicker state acts as a counter to detect when the user clicks
+
+	// Creating a dictionary in local storage to store the like status of each image
+	useEffect(() => {
+		if (!store.get(SHOPIFY_IS_AWESOME)) store.set(SHOPIFY_IS_AWESOME, {});
+	}, []);
 
 	return (
 		<div className="App">
