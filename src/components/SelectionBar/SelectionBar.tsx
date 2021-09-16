@@ -42,7 +42,7 @@ const SelectionBar = ({
 			/>
 
 			<div className="easter-egg-text">
-				<p>There might be an easter egg in the headers</p>
+				<p>There might be an easter egg in the headings</p>
 			</div>
 
 			{/* The button that is clicked to pull the data from the API  */}
