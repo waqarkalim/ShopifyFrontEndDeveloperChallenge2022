@@ -41,6 +41,7 @@ const SelectionBar = ({
 				aria-label="Select Start Date"
 			/>
 
+			{/* Easter Egg Indicator */}
 			<div className="easter-egg-text">
 				<p>There might be an easter egg in the headings</p>
 			</div>

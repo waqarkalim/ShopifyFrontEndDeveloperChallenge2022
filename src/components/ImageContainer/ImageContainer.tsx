@@ -4,8 +4,10 @@ import { AxiosResponse } from 'axios';
 
 import DisplayGrid from './../DisplayGrid';
 
-import API from './../../api';
-import { API_URL, API_KEY } from './../../constants';
+import { client as API, handleError } from './../../api';
+import { API_URL, API_KEY, SHOPIFY_IS_AWESOME } from './../../constants';
+
+import store from './../../storage';
 
 import './styles.scss';
 
@@ -14,12 +16,10 @@ type Props = {
 	clicker: number;
 };
 
+const VIDEO_MEDIA_TYPE: string = 'video';
+
 /**
  * @description The ImageContainer component is a component for fetching the images from NASA's API before displaying them. (Employs the Container Component Pattern to separate the logic and the view)
- *
- * @param {string} startDate
- * @param {number} clicker
- * @returns ReactElement
  */
 const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
 	const [images, setImages] = useState<any[]>([]);
@@ -36,13 +36,17 @@ const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
 	const fetchImages = (): void => {
 		setLoading(true);
 		const URL: string = `${API_URL}?api_key=${API_KEY}&start_date=${startDate}&end_date=${endDate}&thumbs=true`;
+
 		API.get(URL)
 			.then((response: AxiosResponse<any>) => {
 				setImages(processImages(response.data));
 			})
 			.catch((err: any) => {
-				console.log(err);
-				alert(`Error occurred while fetching images.`);
+				const error: Error = handleError(err);
+
+				if (error.message) alert(error.message);
+				else alert(`Error occurred while fetching images.`);
+
 				setImages([]);
 			})
 			.finally(() => {
@@ -58,17 +62,21 @@ const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
 			// As the API does not return any unique id for each image and the code is only using the id for accessiblity purposes, we are considering the array index as our unique id
 			const id: number = index;
 
-			// If media_type is video and then assign the video thumbnail as the display image
-			const imageUrl =
-				media_type === 'video' && thumbnail_url !== ''
+			// If media_type is video and thumbnail exists and then assign the video thumbnail as the display image
+			const imageUrl: string =
+				media_type === VIDEO_MEDIA_TYPE && thumbnail_url !== ''
 					? thumbnail_url
 					: url;
 
-			return { ...image, ...{ id: id, imageUrl: imageUrl } };
+			const isLiked: boolean = store.get(SHOPIFY_IS_AWESOME)[imageUrl] || false;
+
+			return { ...image, ...{ id: id, imageUrl: imageUrl, isLiked: isLiked } };
 		});
 	};
 
-	return <DisplayGrid images={images} isLoading={isLoading} />;
+	return (
+		<DisplayGrid images={images} isLoading={isLoading} setImages={setImages} />
+	);
 };
 
 export default ImageContainer;

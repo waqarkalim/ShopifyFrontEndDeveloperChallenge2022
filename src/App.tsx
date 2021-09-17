@@ -49,10 +49,7 @@ function App() {
 						/>
 					</section>
 					<section>
-						<ImageContainer
-							startDate={startDate}
-							clicker={clicker}
-						/>
+						<ImageContainer startDate={startDate} clicker={clicker} />
 					</section>
 				</main>
 			</Layout>
