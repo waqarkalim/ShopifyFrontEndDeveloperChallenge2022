@@ -7,6 +7,8 @@ import DisplayGrid from './../DisplayGrid';
 import { client as API, handleError } from './../../api';
 import { API_URL, API_KEY, SHOPIFY_IS_AWESOME } from './../../constants';
 
+import { Image } from './../../types';
+
 import store from './../../storage';
 
 import './styles.scss';
@@ -22,7 +24,7 @@ const VIDEO_MEDIA_TYPE: string = 'video';
  * @description The ImageContainer component is a component for fetching the images from NASA's API before displaying them. (Employs the Container Component Pattern to separate the logic and the view)
  */
 const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
-	const [images, setImages] = useState<any[]>([]);
+	const [images, setImages] = useState<Image[]>([]);
 	const [isLoading, setLoading] = useState<boolean>(false);
 
 	const endDate: string = moment().format('YYYY-MM-DD');
@@ -55,8 +57,8 @@ const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
 	};
 
 	// Retrieving the appropriate image url for each image object (for the case where the media type is video and so the url property points to a video and not an image)
-	const processImages = (images: any[]): any[] => {
-		return images.map((image: any, index: number): any => {
+	const processImages = (images: Image[]): Image[] => {
+		return images.map((image: Image, index: number): Image => {
 			const { media_type, thumbnail_url, url } = image;
 
 			// As the API does not return any unique id for each image and the code is only using the id for accessiblity purposes, we are considering the array index as our unique id
@@ -65,8 +67,8 @@ const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
 			// If media_type is video and thumbnail exists and then assign the video thumbnail as the display image
 			const imageUrl: string =
 				media_type === VIDEO_MEDIA_TYPE && thumbnail_url !== ''
-					? thumbnail_url
-					: url;
+					? (thumbnail_url as string)
+					: (url as string);
 
 			const isLiked: boolean = store.get(SHOPIFY_IS_AWESOME)[imageUrl] || false;
 

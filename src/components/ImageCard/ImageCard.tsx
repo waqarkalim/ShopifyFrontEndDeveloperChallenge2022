@@ -5,10 +5,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
+import { Image } from './../../types';
+
 import './styles.scss';
 
 type Props = {
-	image: any;
+	image: Image;
 	toggleLiked: (index: number) => void;
 };
 
@@ -56,7 +58,7 @@ const ImageCard = ({ image, toggleLiked }: Props): ReactElement => {
 						id={`like-button-${id}`}
 						className="like-btn"
 						onClick={() => {
-							toggleLiked(id);
+							toggleLiked(id!);
 						}}
 						aria-pressed={isLiked}
 						aria-label="Like Button"

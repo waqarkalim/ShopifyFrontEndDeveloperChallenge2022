@@ -6,14 +6,16 @@ import { SHOPIFY_IS_AWESOME } from './../../constants';
 
 import store from './../../storage';
 
+import { Image } from './../../types';
+
 import './styles.scss';
 
 const _ = require('lodash');
 
 type Props = {
 	isLoading: boolean;
-	images: any[];
-	setImages: (images: any[]) => void;
+	images: Image[];
+	setImages: (images: Image[]) => void;
 };
 
 /**
@@ -21,13 +23,17 @@ type Props = {
  */
 const DisplayGrid = ({ isLoading, images, setImages }: Props): ReactElement => {
 	const toggleLiked = (index: number): void => {
-		const newArr: any[] = [...images];
+		// const processLikeStatusInLocalStorage = (array: any[], index: number) => {
+
+		// }
+
+		const newArr: Image[] = [...images];
 
 		// If an image is liked, the imageUrl is added to local storage with a true flag, else the imageUrl is removed from local storage
 		if (!newArr[index].isLiked)
 			store.set(SHOPIFY_IS_AWESOME, {
 				...store.get(SHOPIFY_IS_AWESOME),
-				...{ [newArr[index].imageUrl]: !newArr[index].isLiked },
+				...{ [newArr[index].imageUrl as string]: !newArr[index].isLiked },
 			});
 		else
 			store.set(
@@ -46,7 +52,7 @@ const DisplayGrid = ({ isLoading, images, setImages }: Props): ReactElement => {
 				<CircularProgress />
 			) : (
 				<div className="grid">
-					{images.map((image: any, index: number) => (
+					{images.map((image: Image, index: number) => (
 						<ImageCard key={index} image={image} toggleLiked={toggleLiked} />
 					))}
 				</div>
