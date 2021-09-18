@@ -6,7 +6,7 @@ import { SHOPIFY_IS_AWESOME } from './../../constants';
 
 import store from './../../storage';
 
-import { Image } from './../../types';
+import { Image, TImageList } from './../../types';
 
 import './styles.scss';
 
@@ -14,8 +14,8 @@ const _ = require('lodash');
 
 type Props = {
 	isLoading: boolean;
-	images: Image[];
-	setImages: (images: Image[]) => void;
+	images: TImageList;
+	setImages: (images: TImageList) => void;
 };
 
 /**
@@ -23,23 +23,22 @@ type Props = {
  */
 const DisplayGrid = ({ isLoading, images, setImages }: Props): ReactElement => {
 	const toggleLiked = (index: number): void => {
-		// const processLikeStatusInLocalStorage = (array: any[], index: number) => {
+		const newArr: TImageList = [...images];
 
-		// }
-
-		const newArr: Image[] = [...images];
-
-		// If an image is liked, the imageUrl is added to local storage with a true flag, else the imageUrl is removed from local storage
-		if (!newArr[index].isLiked)
-			store.set(SHOPIFY_IS_AWESOME, {
-				...store.get(SHOPIFY_IS_AWESOME),
-				...{ [newArr[index].imageUrl as string]: !newArr[index].isLiked },
-			});
-		else
-			store.set(
-				SHOPIFY_IS_AWESOME,
-				_.omit(store.get(SHOPIFY_IS_AWESOME), newArr[index].imageUrl)
-			);
+		// If SHOPIFY_IS_AWESOME is in local storage
+		if (store.get(SHOPIFY_IS_AWESOME)) {
+			// If an image is liked, the imageUrl is added to local storage with a true flag, else the imageUrl is removed from local storage
+			if (!newArr[index].isLiked)
+				store.set(SHOPIFY_IS_AWESOME, {
+					...store.get(SHOPIFY_IS_AWESOME),
+					...{ [newArr[index].imageUrl]: !newArr[index].isLiked },
+				});
+			else
+				store.set(
+					SHOPIFY_IS_AWESOME,
+					_.omit(store.get(SHOPIFY_IS_AWESOME), newArr[index].imageUrl)
+				);
+		}
 
 		newArr[index].isLiked = !newArr[index].isLiked;
 

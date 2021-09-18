@@ -58,7 +58,7 @@ const ImageCard = ({ image, toggleLiked }: Props): ReactElement => {
 						id={`like-button-${id}`}
 						className="like-btn"
 						onClick={() => {
-							toggleLiked(id!);
+							toggleLiked(id);
 						}}
 						aria-pressed={isLiked}
 						aria-label="Like Button"

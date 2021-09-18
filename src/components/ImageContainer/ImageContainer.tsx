@@ -7,7 +7,7 @@ import DisplayGrid from './../DisplayGrid';
 import { client as API, handleError } from './../../api';
 import { API_URL, API_KEY, SHOPIFY_IS_AWESOME } from './../../constants';
 
-import { Image } from './../../types';
+import { Image, TImageList } from './../../types';
 
 import store from './../../storage';
 
@@ -24,10 +24,24 @@ const VIDEO_MEDIA_TYPE: string = 'video';
  * @description The ImageContainer component is a component for fetching the images from NASA's API before displaying them. (Employs the Container Component Pattern to separate the logic and the view)
  */
 const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
-	const [images, setImages] = useState<Image[]>([]);
+	const [images, setImages] = useState<TImageList>([]);
 	const [isLoading, setLoading] = useState<boolean>(false);
 
 	const endDate: string = moment().format('YYYY-MM-DD');
+
+	useEffect(() => {
+		// If like status for each of the liked images is NOT stored in local storage, repopulate local storage with the like information stored in the props
+		if (!store.get(SHOPIFY_IS_AWESOME))
+			store.set(
+				SHOPIFY_IS_AWESOME,
+				images.reduce((acc: Record<string, boolean>, curr: Image) => {
+					if (curr.isLiked) {
+						acc[curr.imageUrl] = curr.isLiked;
+					}
+					return acc;
+				}, {})
+			);
+	}, [images]);
 
 	// Initiating fetching whenever the pull images button is pressed
 	useEffect(() => {
@@ -39,7 +53,7 @@ const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
 		setLoading(true);
 		const URL: string = `${API_URL}?api_key=${API_KEY}&start_date=${startDate}&end_date=${endDate}&thumbs=true`;
 
-		API.get(URL)
+		API.get<TImageList>(URL)
 			.then((response: AxiosResponse<any>) => {
 				setImages(processImages(response.data));
 			})
@@ -57,7 +71,7 @@ const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
 	};
 
 	// Retrieving the appropriate image url for each image object (for the case where the media type is video and so the url property points to a video and not an image)
-	const processImages = (images: Image[]): Image[] => {
+	const processImages = (images: TImageList): TImageList => {
 		return images.map((image: Image, index: number): Image => {
 			const { media_type, thumbnail_url, url } = image;
 
@@ -67,8 +81,8 @@ const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
 			// If media_type is video and thumbnail exists and then assign the video thumbnail as the display image
 			const imageUrl: string =
 				media_type === VIDEO_MEDIA_TYPE && thumbnail_url !== ''
-					? (thumbnail_url as string)
-					: (url as string);
+					? thumbnail_url
+					: url;
 
 			const isLiked: boolean = store.get(SHOPIFY_IS_AWESOME)[imageUrl] || false;
 
