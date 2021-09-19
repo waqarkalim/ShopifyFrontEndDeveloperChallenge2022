@@ -1,21 +1,26 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { Fragment, ReactElement, useEffect, useState } from 'react';
 import moment from 'moment';
-import { AxiosResponse } from 'axios';
 
-import DisplayGrid from './../DisplayGrid';
+import { CircularProgress } from '@material-ui/core';
+import ImageCard from '../ImageCard';
 
-import { client as API, handleError } from './../../api';
-import { API_URL, API_KEY, SHOPIFY_IS_AWESOME } from './../../constants';
+import { fetchImages, handleError } from '../../api';
 
-import { Image, TImageList } from './../../types';
+import { DATE_FORMAT, SHOPIFY_IS_AWESOME } from './../../constants';
 
-import store from './../../storage';
+import { Image } from './../../types';
+
+import store, {
+	repopulateLikeStatusInLocalStorage,
+	updateLikeStatusInLocalStorage,
+} from './../../storage';
 
 import './styles.scss';
 
 type Props = {
 	startDate: string;
 	clicker: number;
+	setButtonDisabled: (buttonDisabled: boolean) => void;
 };
 
 const VIDEO_MEDIA_TYPE: string = 'video';
@@ -23,39 +28,39 @@ const VIDEO_MEDIA_TYPE: string = 'video';
 /**
  * @description The ImageContainer component is a component for fetching the images from NASA's API before displaying them. (Employs the Container Component Pattern to separate the logic and the view)
  */
-const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
-	const [images, setImages] = useState<TImageList>([]);
+const ImageContainer = ({
+	startDate,
+	clicker,
+	setButtonDisabled,
+}: Props): ReactElement => {
+	const [images, setImages] = useState<Image[]>([]);
 	const [isLoading, setLoading] = useState<boolean>(false);
 
-	const endDate: string = moment().format('YYYY-MM-DD');
+	const endDate: string = moment().format(DATE_FORMAT);
 
+	// Whenever the images are updated, if the local storage does not contain any key for the images' like status, the local storage gets repopulated with the like information stored in the state
 	useEffect(() => {
-		// If like status for each of the liked images is NOT stored in local storage, repopulate local storage with the like information stored in the props
 		if (!store.get(SHOPIFY_IS_AWESOME))
-			store.set(
-				SHOPIFY_IS_AWESOME,
-				images.reduce((acc: Record<string, boolean>, curr: Image) => {
-					if (curr.isLiked) {
-						acc[curr.imageUrl] = curr.isLiked;
-					}
-					return acc;
-				}, {})
-			);
+			repopulateLikeStatusInLocalStorage(SHOPIFY_IS_AWESOME, images);
 	}, [images]);
 
-	// Initiating fetching whenever the pull images button is pressed
+	// Whenever the pull images button is pressed, the images are retrieved
 	useEffect(() => {
-		fetchImages();
+		retrieveImages(startDate, endDate);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [clicker]);
 
-	// Fetching images from NASA API, timeout set to 10 seconds
-	const fetchImages = (): void => {
+	/**
+	 * @description The retrieveImages() function fetches the images from the API, processes those images to contain the relevant informations that we need, and then sets those images to our images state
+	 * @param startDate The starting date from when the API should return the images
+	 * @param endDate The ending date to when the API should return the images
+	 */
+	const retrieveImages = (startDate: string, endDate: string) => {
+		setButtonDisabled(true);
 		setLoading(true);
-		const URL: string = `${API_URL}?api_key=${API_KEY}&start_date=${startDate}&end_date=${endDate}&thumbs=true`;
-
-		API.get<TImageList>(URL)
-			.then((response: AxiosResponse<any>) => {
-				setImages(processImages(response.data));
+		fetchImages(startDate, endDate, true)
+			.then((data: Image[]) => {
+				setImages(processImages(data));
 			})
 			.catch((err: any) => {
 				const error: Error = handleError(err);
@@ -67,31 +72,64 @@ const ImageContainer = ({ startDate, clicker }: Props): ReactElement => {
 			})
 			.finally(() => {
 				setLoading(false);
+				setButtonDisabled(false);
 			});
 	};
 
-	// Retrieving the appropriate image url for each image object (for the case where the media type is video and so the url property points to a video and not an image)
-	const processImages = (images: TImageList): TImageList => {
+	/**
+	 * @description The processImages() function adds a few important properties to each image object, properties such as an id property (the id to reference the image object by), an imageUrl property (the actual url pointing to the image we are going to display), and the isLiked property (the liked/unliked status of an image)
+	 * @param images An array of Images - images that are retrieved from the API
+	 * @returns An array of Images with the added relevant properties
+	 */
+	const processImages = (images: Image[]): Image[] => {
 		return images.map((image: Image, index: number): Image => {
 			const { media_type, thumbnail_url, url } = image;
 
 			// As the API does not return any unique id for each image and the code is only using the id for accessiblity purposes, we are considering the array index as our unique id
 			const id: number = index;
 
-			// If media_type is video and thumbnail exists and then assign the video thumbnail as the display image
+			// Assign the video thumbnail as the display image if media_type is video and thumbnail exists, if it isn't then use url as the display image url
 			const imageUrl: string =
 				media_type === VIDEO_MEDIA_TYPE && thumbnail_url !== ''
 					? thumbnail_url
 					: url;
 
+			// Assigns the like status of an image from local storage, if it doesn't exist in local storage, then it defaults to false
 			const isLiked: boolean = store.get(SHOPIFY_IS_AWESOME)[imageUrl] || false;
 
 			return { ...image, ...{ id: id, imageUrl: imageUrl, isLiked: isLiked } };
 		});
 	};
 
+	/**
+	 * @description The toggleLiked() function toggles the like status of the image in the props, as well as updates the value in local storage. If an image is liked, it is added to local storage, and if it unliked, it is removed from local storage
+	 * @param index The array index of the image object in the image array
+	 */
+	const toggleLiked = (index: number): void => {
+		const newArr: Image[] = [...images];
+
+		newArr[index] = {
+			...newArr[index],
+			...{ isLiked: !newArr[index].isLiked },
+		};
+
+		if (store.get(SHOPIFY_IS_AWESOME))
+			updateLikeStatusInLocalStorage(SHOPIFY_IS_AWESOME, newArr, index);
+
+		setImages(newArr);
+	};
 	return (
-		<DisplayGrid images={images} isLoading={isLoading} setImages={setImages} />
+		<Fragment>
+			{isLoading ? (
+				<CircularProgress />
+			) : (
+				<div className="grid">
+					{images.map((image: Image, index: number) => (
+						<ImageCard key={index} image={image} toggleLiked={toggleLiked} />
+					))}
+				</div>
+			)}
+		</Fragment>
 	);
 };
 

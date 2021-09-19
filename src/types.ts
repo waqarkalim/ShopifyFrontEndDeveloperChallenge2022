@@ -18,5 +18,3 @@ export type Image = {
 	copyright: string;
 	service_version: string;
 };
-
-export type TImageList = Image[];

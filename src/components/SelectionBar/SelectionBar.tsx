@@ -9,22 +9,18 @@ type Props = {
 	clicker: number;
 	setStartDate: (startDate: string) => void;
 	setClicker: (clicker: number) => void;
+	buttonDisabled: boolean;
 };
 
 /**
  * @description The SelectionBar is a component that allows the user to select their input for the API as well as allows them to fetch the images
- *
- * @param {string} startDate
- * @param {number} clicker
- * @param {function} setStartDate
- * @param {function} setClicker
- * @returns ReactElement
  */
 const SelectionBar = ({
 	startDate,
 	clicker,
 	setStartDate,
 	setClicker,
+	buttonDisabled,
 }: Props): ReactElement => {
 	const handlePullImagesButtonClick = (): void => {
 		setClicker(clicker + 1);
@@ -52,6 +48,7 @@ const SelectionBar = ({
 				className="btn ripple"
 				onClick={handlePullImagesButtonClick}
 				aria-label="Click Here To Pull Images"
+				disabled={buttonDisabled}
 			>
 				Click Here To Pull Images
 			</button>

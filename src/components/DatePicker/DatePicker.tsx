@@ -6,6 +6,8 @@ import {
 import MomentUtils from '@date-io/moment';
 import moment from 'moment';
 
+import { DATE_FORMAT } from './../../constants';
+
 import './styles.scss';
 
 type Props = {
@@ -36,7 +38,7 @@ const DatePicker = ({ id, label, date, onChange }: Props): ReactElement => {
 				label={label}
 				disableToolbar // Disable toolbar on date picker
 				variant="inline"
-				format="YYYY-MM-DD"
+				format={DATE_FORMAT}
 				margin="normal"
 				autoOk={true}
 				inputValue={date}

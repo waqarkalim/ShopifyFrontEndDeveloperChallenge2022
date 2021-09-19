@@ -16,6 +16,7 @@ function App() {
 		moment().format('YYYY-MM-DD')
 	);
 	const [clicker, setClicker] = useState<number>(0); // The clicker state acts as a counter to detect when the user clicks
+	const [buttonDisabled, setButtonDisabled] = useState<boolean>(false); // The disabled state of the pull images button
 
 	// Creating a dictionary in local storage to store the like status of each image
 	useEffect(() => {
@@ -46,10 +47,15 @@ function App() {
 							clicker={clicker}
 							setStartDate={setStartDate}
 							setClicker={setClicker}
+							buttonDisabled={buttonDisabled}
 						/>
 					</section>
 					<section>
-						<ImageContainer startDate={startDate} clicker={clicker} />
+						<ImageContainer
+							startDate={startDate}
+							clicker={clicker}
+							setButtonDisabled={setButtonDisabled}
+						/>
 					</section>
 				</main>
 			</Layout>
