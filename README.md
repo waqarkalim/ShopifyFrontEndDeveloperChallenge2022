@@ -8,7 +8,7 @@ As part of Shopify's hiring process for internship positions, candidates are req
 
 - Save likes if the user leaves or reloads the page
 - A circular loading bar appears while the user waits for NASA’s API to return data
-- If there is an issue retrieving photos from NASA's API, the API call is retried at most 3 times; if there is still an issue, the user is notified
+- If there is still an issue fetching the images from NASA's API, the user is alerted with the appropriate error message
 - User can browse photos starting from a specific date
 - Follows accessibility guidelines ([MDN reference](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML))
 - Responsive Design
