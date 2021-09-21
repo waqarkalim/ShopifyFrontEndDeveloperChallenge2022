@@ -48,6 +48,15 @@ Start the server
 ```
 
   
+## Running Tests
+
+To run tests, run the following command
+
+```bash
+  npm run cypress:open
+```
+
+  
 ## Deployment
 
 To deploy this project run
@@ -59,9 +68,7 @@ To deploy this project run
   
 ## Tech Stack
 
-React, TypeScript, HTML, CSS
+React, TypeScript, HTML, CSS, Cypress
 ## Feedback
 
 If you have any feedback, please reach out to me at waqaar.199@gmail.com
-
-  
