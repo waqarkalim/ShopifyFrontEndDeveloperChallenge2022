@@ -32,7 +32,11 @@ const DatePicker = ({ id, label, date, onChange }: Props): ReactElement => {
 	};
 
 	return (
-		<MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
+		<MuiPickersUtilsProvider
+			date-testid={'date-picker'}
+			libInstance={moment}
+			utils={MomentUtils}
+		>
 			<KeyboardDatePicker
 				id={id}
 				label={label}

@@ -44,6 +44,7 @@ const SelectionBar = ({
 
 			{/* The button that is clicked to pull the data from the API  */}
 			<button
+				data-testid="pull-images-button"
 				type="button"
 				className="btn ripple"
 				onClick={handlePullImagesButtonClick}
