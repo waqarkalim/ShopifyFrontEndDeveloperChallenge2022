@@ -1,71 +1,71 @@
 $material-blue: #3f51b5;
 
 .selection-bar {
-	width: inherit;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	background-color: white;
-	border-radius: 2rem;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-	padding-top: 1rem;
-	padding-bottom: 1rem;
+  width: inherit;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+  border-radius: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 @media only screen and (max-width: 600px) {
-	.selection-bar {
-		flex-direction: column;
+  .selection-bar {
+    flex-direction: column;
 
-		* {
-			margin: 0.5rem;
-		}
-	}
+    * {
+      margin: 0.5rem;
+    }
+  }
 }
 
 .btn {
-	font-size: 1rem;
-	font-family: Helvetica;
-	background-color: $material-blue;
-	color: white;
-	padding: 1rem 1.5rem;
-	border-radius: 0.5rem;
-	cursor: pointer;
-	box-shadow: 0 0 0 transparent;
-	border: 0 solid transparent;
-	text-transform: 0 0 0 transparent;
+  font-size: 1rem;
+  font-family: Helvetica;
+  background-color: $material-blue;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 0 0 transparent;
+  border: 0 solid transparent;
+  text-transform: 0 0 0 transparent;
 }
 
 .btn[disabled],
 .btn[disabled]:hover,
 .btn[disabled]:focus,
 .btn[disabled]:active {
-	opacity: 0.38;
+  opacity: 0.38;
 }
 
 .ripple {
-	background-position: center;
-	transition: background-color 0.8s;
+  background-position: center;
+  transition: background-color 0.8s;
 }
 
 .ripple:hover {
-	background: #005092 radial-gradient(circle, transparent 1%, #005092 1%)
-		center/15000%;
+  background: #005092 radial-gradient(circle, transparent 1%, #005092 1%)
+    center/15000%;
 }
 .ripple:active {
-	background-color: #6eb9f7;
-	background-size: 100%;
-	transition: background_color 0s;
+  background-color: #6eb9f7;
+  background-size: 100%;
+  transition: background_color 0s;
 }
 
 .easter-egg-text {
-	color: transparent;
-	padding: 1rem;
-	background-color: white;
-	border-radius: 10rem;
-	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  color: transparent;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 10rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
-	:hover {
-		color: black;
-	}
+  :hover {
+    color: black;
+  }
 }

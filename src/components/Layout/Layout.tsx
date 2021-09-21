@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import './styles.scss';
 
 type Props = {
-	children: ReactElement[];
+  children: ReactElement[];
 };
 
 /**
@@ -13,7 +13,7 @@ type Props = {
  * @returns ReactElement
  */
 const Layout = ({ children }: Props): ReactElement => {
-	return <div className="layout">{children}</div>;
+  return <div className="layout">{children}</div>;
 };
 
 export default Layout;
